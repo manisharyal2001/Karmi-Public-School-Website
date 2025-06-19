@@ -11,10 +11,10 @@ This is a comprehensive school management system website for Karmi Public School
 
 ### Main Pages
 
-![Home Page Screenshot](public\images\homess.png)  
+![Home Page Screenshot](public/images/homess.png)  
 **Home Page**: Welcome page with school information and quick links
 
-![About Us Page Screenshot](images/screenshots/about.png)  
+![About Us Page Screenshot](public/images/aboutuss.png)  
 **About Us**: School history, mission, and achievements
 
 ![Admission Page Screenshot](public/images/admissionss.png)  
