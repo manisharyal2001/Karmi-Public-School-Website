@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fee Payment - Karmi Public School</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 800px;
+      margin-top: 30px;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+      background-color: #0d6efd;
+      color: white;
+      border-radius: 15px 15px 0 0 !important;
+      padding: 20px;
+    }
+    .form-label {
+      font-weight: 600;
+      color: #495057;
+    }
+    .form-control, .form-select {
+      border-radius: 8px;
+      padding: 10px 15px;
+    }
+    .btn-primary {
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .receipt {
+      display: none;
+      background-color: #ffffff;
+      border: 2px solid #28a745;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .receipt.show {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+    .fee-info {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      padding: 15px;
+      background-color: #e8f4ff;
+      border-radius: 10px;
+    }
+    .payment-methods img {
+      height: 30px;
+      margin: 5px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 4rem 0 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content h4 {
+      color: #ffc107;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-content ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-content ul li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-content ul li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-content ul li a:hover {
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="images/logo.png" alt="School Logo" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+        Karmi Public School
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="admission.html">Admission</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="fee-payment.html">Fee Payment</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gallery.html">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Fee Payment</h3>
+      </div>
+      <div class="card-body">
+        <!-- Fee Information -->
+        <div class="fee-info">
+          <h5><i class="fas fa-info-circle me-2"></i>Fee Information</h5>
+          <p class="mb-0">Please select your class and fee category. The amount will be automatically calculated based on your selection.</p>
+        </div>
+
+        <form id="feePaymentForm">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Applicant Number</label>
+              <input type="text" class="form-control" id="applicantNumber" required
+                     pattern="^[0-9]{2}KPS[0-9]{4}$" 
+                     placeholder="e.g., 25KPS0001">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Class</label>
+              <select class="form-select" id="class" required>
+                <option value="">Select Class</option>
+                <option value="Nursery">Nursery</option>
+                <option value="LKG">LKG</option>
+                <option value="UKG">UKG</option>
+                <option value="Class 1">Class 1</option>
+                <option value="Class 2">Class 2</option>
+                <option value="Class 3">Class 3</option>
+                <option value="Class 4">Class 4</option>
+                <option value="Class 5">Class 5</option>
+                <option value="Class 6">Class 6</option>
+                <option value="Class 7">Class 7</option>
+                <option value="Class 8">Class 8</option>
+                <option value="Class 9">Class 9</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Fee Category</label>
+              <select class="form-select" id="feeCategory" required>
+                <option value="">Select Fee Category</option>
+                <option value="Admission Fee">Admission Fee</option>
+                <option value="Tuition Fee">Tuition Fee</option>
+                <option value="Development Fee">Development Fee</option>
+                <option value="Library Fee">Library Fee</option>
+                <option value="Laboratory Fee">Laboratory Fee</option>
+                <option value="Computer Fee">Computer Fee</option>
+                <option value="Sports Fee">Sports Fee</option>
+                <option value="Transport Fee">Transport Fee</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Academic Year</label>
+              <select class="form-select" id="academicYear" required>
+                <option value="">Select Academic Year</option>
+                <option value="2024-2025">2024-2025</option>
+                <option value="2025-2026">2025-2026</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Amount (₹)</label>
+              <input type="number" class="form-control" id="amount" required min="0" readonly>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Payment Method</label>
+              <select class="form-select" id="paymentMethod" required>
+                <option value="">Select Payment Method</option>
+                <option value="Cash">Cash</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="UPI">UPI</option>
+                <option value="Net Banking">Net Banking</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="payment-methods text-center mt-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo_%28standalone%29.svg/2560px-Paytm_Logo_%28standalone%29.svg.png" alt="Paytm">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/2560px-UPI-Logo-vector.svg.png" alt="UPI">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" alt="Mastercard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa">
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-credit-card me-2"></i>Process Payment
+            </button>
+          </div>
+        </form>
+
+        <!-- Receipt Template -->
+        <div id="receipt" class="receipt mt-4">
+          <div class="text-center mb-4">
+            <h4 class="text-success"><i class="fas fa-check-circle me-2"></i>Payment Successful</h4>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Receipt Number:</strong> <span id="receiptNumber"></span></p>
+              <p><strong>Student Name:</strong> <span id="studentName"></span></p>
+              <p><strong>Applicant Number:</strong> <span id="receiptApplicantNumber"></span></p>
+              <p><strong>Class:</strong> <span id="receiptClass"></span></p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Fee Category:</strong> <span id="receiptFeeCategory"></span></p>
+              <p><strong>Amount Paid:</strong> ₹<span id="receiptAmount"></span></p>
+              <p><strong>Payment Date:</strong> <span id="paymentDate"></span></p>
+              <p><strong>Payment Status:</strong> <span id="paymentStatus" class="badge bg-success">Completed</span></p>
+            </div>
+          </div>
+          <div class="text-center mt-3">
+            <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
+              <i class="fas fa-print me-2"></i>Print Receipt
+            </button>
+            <button class="btn btn-outline-secondary btn-sm" onclick="copyReceiptNumber()">
+              <i class="fas fa-copy me-2"></i>Copy Receipt Number
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="footer-content">
+            <h4>About KPS</h4>
+            <p>Karmi Public School is dedicated to providing quality education through a team of highly qualified teachers, guided by a visionary Board of Directors.</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="footer-content">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="admission.html">Admission Process</a></li>
+              <li><a href="fee-payment.html">Fee Structure</a></li>
+              <li><a href="study-materials.html">Academic Resources</a></li>
+              <li><a href="gallery.html">School Gallery</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="footer-content">
+            <h4>Contact Us</h4>
+            <ul>
+              <li><i class="fas fa-map-marker-alt"></i> Kolbong, Darjeeling</li>
+              <li><i class="fas fa-phone"></i> +91 7319393656</li>
+              <li><i class="fas fa-envelope"></i> info@karmipublicschool.com</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <p>&copy; 2025 Karmi Public School. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Fee structure data
+    const feeStructure = {
+      'Nursery': {
+        'Admission Fee': 5000,
+        'Tuition Fee': 15000,
+        'Development Fee': 3000,
+        'Library Fee': 1000,
+        'Laboratory Fee': 0,
+        'Computer Fee': 1000,
+        'Sports Fee': 1000,
+        'Transport Fee': 3000
+      },
+      'LKG': {
+        'Admission Fee': 5000,
+        'Tuition Fee': 18000,
+        'Development Fee': 3500,
+        'Library Fee': 1200,
+        'Laboratory Fee': 0,
+        'Computer Fee': 1500,
+        'Sports Fee': 1200,
+        'Transport Fee': 3000
+      },
+      'UKG': {
+        'Admission Fee': 5000,
+        'Tuition Fee': 18000,
+        'Development Fee': 3500,
+        'Library Fee': 1200,
+        'Laboratory Fee': 0,
+        'Computer Fee': 1500,
+        'Sports Fee': 1200,
+        'Transport Fee': 3000
+      },
+      'Class 1': {
+        'Admission Fee': 6000,
+        'Tuition Fee': 20000,
+        'Development Fee': 4000,
+        'Library Fee': 1500,
+        'Laboratory Fee': 1000,
+        'Computer Fee': 2000,
+        'Sports Fee': 1500,
+        'Transport Fee': 4000
+      },
+      'Class 2': {
+        'Admission Fee': 6000,
+        'Tuition Fee': 20000,
+        'Development Fee': 4000,
+        'Library Fee': 1500,
+        'Laboratory Fee': 1000,
+        'Computer Fee': 2000,
+        'Sports Fee': 1500,
+        'Transport Fee': 4000
+      },
+      'Class 3': {
+        'Admission Fee': 6000,
+        'Tuition Fee': 20000,
+        'Development Fee': 4000,
+        'Library Fee': 1500,
+        'Laboratory Fee': 1000,
+        'Computer Fee': 2000,
+        'Sports Fee': 1500,
+        'Transport Fee': 4000
+      },
+      'Class 4': {
+        'Admission Fee': 7000,
+        'Tuition Fee': 25000,
+        'Development Fee': 5000,
+        'Library Fee': 2000,
+        'Laboratory Fee': 2000,
+        'Computer Fee': 2500,
+        'Sports Fee': 2000,
+        'Transport Fee': 5000
+      },
+      'Class 5': {
+        'Admission Fee': 7000,
+        'Tuition Fee': 25000,
+        'Development Fee': 5000,
+        'Library Fee': 2000,
+        'Laboratory Fee': 2000,
+        'Computer Fee': 2500,
+        'Sports Fee': 2000,
+        'Transport Fee': 5000
+      },
+      'Class 6': {
+        'Admission Fee': 7000,
+        'Tuition Fee': 25000,
+        'Development Fee': 5000,
+        'Library Fee': 2000,
+        'Laboratory Fee': 2000,
+        'Computer Fee': 2500,
+        'Sports Fee': 2000,
+        'Transport Fee': 5000
+      },
+      'Class 7': {
+        'Admission Fee': 8000,
+        'Tuition Fee': 30000,
+        'Development Fee': 6000,
+        'Library Fee': 2500,
+        'Laboratory Fee': 3000,
+        'Computer Fee': 3000,
+        'Sports Fee': 2500,
+        'Transport Fee': 6000
+      },
+      'Class 8': {
+        'Admission Fee': 8000,
+        'Tuition Fee': 30000,
+        'Development Fee': 6000,
+        'Library Fee': 2500,
+        'Laboratory Fee': 3000,
+        'Computer Fee': 3000,
+        'Sports Fee': 2500,
+        'Transport Fee': 6000
+      },
+      'Class 9': {
+        'Admission Fee': 8000,
+        'Tuition Fee': 30000,
+        'Development Fee': 6000,
+        'Library Fee': 2500,
+        'Laboratory Fee': 3000,
+        'Computer Fee': 3000,
+        'Sports Fee': 2500,
+        'Transport Fee': 6000
+      }
+    };
+
+    // Auto-populate amount based on class and fee category
+    function updateAmount() {
+      const selectedClass = document.getElementById('class').value;
+      const selectedCategory = document.getElementById('feeCategory').value;
+      
+      if (selectedClass && selectedCategory) {
+        const amount = feeStructure[selectedClass][selectedCategory];
+        document.getElementById('amount').value = amount || 0;
+      }
+    }
+
+    // Add event listeners for class and fee category changes
+    document.getElementById('class').addEventListener('change', updateAmount);
+    document.getElementById('feeCategory').addEventListener('change', updateAmount);
+
+    // Handle form submission
+    document.getElementById('feePaymentForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = {
+        applicantNumber: document.getElementById('applicantNumber').value,
+        class: document.getElementById('class').value,
+        feeCategory: document.getElementById('feeCategory').value,
+        academicYear: document.getElementById('academicYear').value,
+        amount: document.getElementById('amount').value,
+        paymentMethod: document.getElementById('paymentMethod').value,
+        transactionId: 'TXN' + Date.now() // Generate a unique transaction ID
+      };
+
+      try {
+        const response = await fetch('/api/fee/payments', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Show receipt
+          document.getElementById('receipt').classList.add('show');
+          document.getElementById('receiptNumber').textContent = result.data.receiptNumber;
+          document.getElementById('studentName').textContent = result.data.studentName;
+          document.getElementById('receiptApplicantNumber').textContent = formData.applicantNumber;
+          document.getElementById('receiptClass').textContent = formData.class;
+          document.getElementById('receiptFeeCategory').textContent = formData.feeCategory;
+          document.getElementById('receiptAmount').textContent = formData.amount;
+          document.getElementById('paymentDate').textContent = new Date().toLocaleDateString();
+          
+          // Clear form
+          this.reset();
+        } else {
+          alert(result.message || 'Payment failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      }
+    });
+
+    // Copy receipt number
+    function copyReceiptNumber() {
+      const receiptNumber = document.getElementById('receiptNumber').textContent;
+      navigator.clipboard.writeText(receiptNumber);
+      alert('Receipt number copied to clipboard!');
+    }
+  </script>
+</body>
+</html>

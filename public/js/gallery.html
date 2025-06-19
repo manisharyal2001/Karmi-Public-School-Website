@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karmi Public School - Gallery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --navy-blue: #003366;
+            --navy-blue-light: #004080;
+            --navy-blue-dark: #002147;
+            --transition-speed: 0.3s;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: var(--navy-blue);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .nav-link {
+            color: white !important;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #f8f9fa !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            color: #f8f9fa !important;
+            font-weight: 600;
+        }
+
+        .page-title {
+            color: var(--navy-blue);
+            text-align: center;
+            margin: 3rem 0;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .page-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--navy-blue);
+            margin: 10px auto;
+        }
+
+        .footer {
+            background-color: var(--navy-blue);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f8f9fa;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            font-size: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px) scale(1.1);
+            color: var(--navy-blue-light);
+        }
+
+        /* Gallery specific styles */
+        .gallery-section {
+            padding: 60px 0;
+        }
+        
+        .gallery-title {
+            color: var(--navy-blue);
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+        
+        .gallery-item {
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .gallery-caption {
+            padding: 15px;
+            background-color: white;
+        }
+        
+        .gallery-caption h5 {
+            color: var(--navy-blue);
+            margin-bottom: 10px;
+        }
+        
+        .gallery-caption p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .filter-buttons {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .filter-btn {
+            margin: 0 10px;
+            padding: 8px 20px;
+            border: 2px solid var(--navy-blue);
+            color: var(--navy-blue);
+            background: transparent;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--navy-blue);
+            color: white;
+        }
+
+        /* Video section styles */
+        .video-section {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+
+        .video-item {
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .video-item video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .video-caption {
+            padding: 15px;
+            background-color: white;
+        }
+
+        .video-caption h5 {
+            color: var(--navy-blue);
+            margin-bottom: 10px;
+        }
+
+        .video-caption p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="School Logo">
+                Karmi Public School
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admission.html">Admission</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="study_material.html">Study Materials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Add Breadcrumb -->
+    <nav aria-label="breadcrumb" class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gallery</li>
+        </ol>
+    </nav>
+
+    <section class="gallery-section">
+        <div class="container">
+            <!-- Gallery Grid -->
+            <div class="row">
+                <!-- Event Images -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <a href="images/events.jpg" data-lightbox="events" data-title="School Events">
+                        <img src="images/events.jpg" alt="School Events">
+                        <div class="gallery-caption">
+                            <h5>School Events</h5>
+                            <p>Various school events and celebrations</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <a href="images/cultural_activity.jpg" data-lightbox="events" data-title="Cultural Activities">
+                        <img src="images/cultural_activity.jpg" alt="Cultural Activities">
+                        <div class="gallery-caption">
+                            <h5>Cultural Activities</h5>
+                            <p>Students participating in cultural events</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <a href="images/Anual_Sports.JPG" data-lightbox="events" data-title="Annual Sports">
+                        <img src="images/Anual_Sports.JPG" alt="Annual Sports">
+                        <div class="gallery-caption">
+                            <h5>Annual Sports</h5>
+                            <p>Annual sports day celebrations</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Classroom Images -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="classroom">
+                    <a href="images/school.jpg" data-lightbox="classroom" data-title="School Campus">
+                        <img src="images/school.jpg" alt="School Campus">
+                        <div class="gallery-caption">
+                            <h5>School Campus</h5>
+                            <p>Our beautiful school campus</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="classroom">
+                    <a href="images/school campus.jpg" data-lightbox="classroom" data-title="School Building">
+                        <img src="images/school campus.jpg" alt="School Building">
+                        <div class="gallery-caption">
+                            <h5>School Building</h5>
+                            <p>Modern school infrastructure</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="classroom">
+                    <a href="images/school faculty.jpg" data-lightbox="classroom" data-title="School Faculty">
+                        <img src="images/school faculty.jpg" alt="School Faculty">
+                        <div class="gallery-caption">
+                            <h5>School Faculty</h5>
+                            <p>Our dedicated teaching staff</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Sports Images -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="sports">
+                    <a href="images/sports.jpg" data-lightbox="sports" data-title="Sports Activities">
+                        <img src="images/sports.jpg" alt="Sports Activities">
+                        <div class="gallery-caption">
+                            <h5>Sports Activities</h5>
+                            <p>Students participating in sports</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="sports">
+                    <a href="images/sports1.jpg" data-lightbox="sports" data-title="Sports Day">
+                        <img src="images/sports1.jpg" alt="Sports Day">
+                        <div class="gallery-caption">
+                            <h5>Sports Day</h5>
+                            <p>Annual sports day competitions</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="sports">
+                    <a href="images/sports2.jpg" data-lightbox="sports" data-title="Sports Events">
+                        <img src="images/sports2.jpg" alt="Sports Events">
+                        <div class="gallery-caption">
+                            <h5>Sports Events</h5>
+                            <p>Inter-school sports competitions</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Activities Images -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="activities">
+                    <a href="images/activity1.jpg" data-lightbox="activities" data-title="School Activities">
+                        <img src="images/activity1.jpg" alt="School Activities">
+                        <div class="gallery-caption">
+                            <h5>School Activities</h5>
+                            <p>Students engaged in various activities</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="activities">
+                    <a href="images/activity2.jpg" data-lightbox="activities" data-title="Creative Activities">
+                        <img src="images/activity2.jpg" alt="Creative Activities">
+                        <div class="gallery-caption">
+                            <h5>Creative Activities</h5>
+                            <p>Students exploring their creative side</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="activities">
+                    <a href="images/activity3.jpg" data-lightbox="activities" data-title="Extra-curricular Activities">
+                        <img src="images/activity3.jpg" alt="Extra-curricular Activities">
+                        <div class="gallery-caption">
+                            <h5>Extra-curricular Activities</h5>
+                            <p>Students participating in various activities</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Gallery Section -->
+    <section class="video-section">
+        <div class="container">
+            <h2 class="gallery-title">School Videos</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="video-item">
+                        <video controls>
+                            <source src="videos/creativity1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-caption">
+                            <h5>Creative Activities</h5>
+                            <p>Students engaging in creative learning activities</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="video-item">
+                        <video controls>
+                            <source src="videos/creativity2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-caption">
+                            <h5>Learning Through Creativity</h5>
+                            <p>Interactive learning sessions and creative projects</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="video-item">
+                        <video controls>
+                            <source src="videos/creativity3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-caption">
+                            <h5>Student Creativity</h5>
+                            <p>Showcasing student creativity and innovation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>About Karmi Public School</h5>
+                    <p>Providing quality education since 1990. Our mission is to nurture young minds and prepare them for a bright future.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="admission.html">Admission</a></li>
+                        <li><a href="study_material.html">Study Materials</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <address>
+                        <p><i class="bi bi-geo-alt"></i> 123 School Street, City</p>
+                        <p><i class="bi bi-telephone"></i> +1 234 567 890</p>
+                        <p><i class="bi bi-envelope"></i> info@karmipublicschool.com</p>
+                    </address>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 Karmi Public School. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="privacy.html" class="footer-links">Privacy Policy</a>
+                    <a href="terms.html" class="footer-links">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script>
+        lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true,
+            'showImageNumberLabel': false
+        });
+
+        // Gallery Filter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,66 @@
+<footer class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>About Karmi Public School</h5>
+                <p>Providing quality education since 1990. Our mission is to nurture young minds and prepare them for a bright future.</p>
+                <div class="social-links">
+                    <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="index.html" class="text-white">Home</a></li>
+                    <li><a href="admission.html" class="text-white">Admission</a></li>
+                    <li><a href="study_material.html" class="text-white">Study Materials</a></li>
+                    <li><a href="gallery.html" class="text-white">Gallery</a></li>
+                    <li><a href="about.html" class="text-white">About Us</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <address>
+                    <p><i class="bi bi-geo-alt"></i> 123 School Street, City</p>
+                    <p><i class="bi bi-telephone"></i> +1 234 567 890</p>
+                    <p><i class="bi bi-envelope"></i> info@karmipublicschool.com</p>
+                </address>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <p>&copy; 2024 Karmi Public School. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="privacy.html" class="text-white me-3">Privacy Policy</a>
+                <a href="terms.html" class="text-white">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Set active page in navigation
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+
+        // Set current page in breadcrumb
+        const currentPage = document.getElementById('currentPage');
+        const pageTitle = document.title.split(' - ')[0];
+        currentPage.textContent = pageTitle;
+    });
+</script>
+</body>
+</html> 

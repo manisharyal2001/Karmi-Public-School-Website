@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Materials - Karmi Public School</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --navy-blue: #003366;
+            --navy-blue-light: #004080;
+            --navy-blue-dark: #002147;
+            --transition-speed: 0.3s;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: var(--navy-blue);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .nav-link {
+            color: white !important;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #f8f9fa !important;
+            transform: translateY(-2px);
+        }
+
+        .page-title {
+            color: var(--navy-blue);
+            text-align: center;
+            margin: 3rem 0;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .page-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--navy-blue);
+            margin: 10px auto;
+        }
+
+        .study-section {
+            padding: 2rem 0;
+        }
+
+        .class-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .class-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .class-title {
+            color: var(--navy-blue);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--navy-blue);
+        }
+
+        .subject-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .subject-title {
+            color: var(--navy-blue);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-link {
+            color: var(--navy-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .video-link:hover {
+            color: var(--navy-blue-light);
+            text-decoration: none;
+        }
+
+        .video-link i {
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background-color: var(--navy-blue);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f8f9fa;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            font-size: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Breadcrumb Styles */
+        .breadcrumb {
+            background: transparent;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb-item {
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--navy-blue);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--navy-blue-light);
+        }
+
+        .breadcrumb-item.active {
+            color: #6c757d;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .class-section {
+                padding: 1.5rem;
+            }
+
+            .subject-card {
+                padding: 0.8rem;
+            }
+
+            .class-title {
+                font-size: 1.5rem;
+            }
+
+            .subject-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Add notice section styles */
+        .notice-section {
+            background: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .notice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .notice-header {
+            color: var(--navy-blue);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .notice-header:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--navy-blue);
+        }
+
+        .notice-item {
+            background: #f8f9fa;
+            border-left: 4px solid var(--navy-blue);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .notice-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .notice-date {
+            color: var(--navy-blue);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .notice-title {
+            color: var(--navy-blue-dark);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .notice-content {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .notice-important {
+            border-left-color: #dc3545;
+        }
+
+        .notice-important .notice-title {
+            color: #dc3545;
+        }
+    </style>
+    <script>
+        // Check if user is logged in
+        function checkLogin() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Function to get student class based on credentials
+        function getStudentClass() {
+            const studentId = localStorage.getItem('studentId');
+            switch(studentId) {
+                case '24KPS001':
+                    return 'Class 5';
+                case '24KPS002':
+                    return 'Class 7';
+                case '24KPS003':
+                    return 'Class 8';
+                default:
+                    return 'Class 5'; // Default case
+            }
+        }
+
+        // Function to get class-specific materials
+        function getClassMaterials() {
+            const studentClass = getStudentClass();
+            switch(studentClass) {
+                case 'Class 5':
+                    return {
+                        textbooks: [
+                            'Mathematics - Class 5',
+                            'Science - Class 5',
+                            'English - Class 5',
+                            'Social Studies - Class 5'
+                        ],
+                        notes: [
+                            'Math Chapter 1 Notes',
+                            'Science Chapter 2 Notes',
+                            'English Grammar Notes',
+                            'History Notes'
+                        ],
+                        assignments: [
+                            'Math Assignment 1',
+                            'Science Project',
+                            'English Essay',
+                            'Social Studies Assignment'
+                        ]
+                    };
+                case 'Class 7':
+                    return {
+                        textbooks: [
+                            'Mathematics - Class 7',
+                            'Science - Class 7',
+                            'English - Class 7',
+                            'Social Studies - Class 7'
+                        ],
+                        notes: [
+                            'Algebra Notes',
+                            'Physics Notes',
+                            'Literature Notes',
+                            'Geography Notes'
+                        ],
+                        assignments: [
+                            'Math Problem Set',
+                            'Science Lab Report',
+                            'English Creative Writing',
+                            'History Project'
+                        ]
+                    };
+                case 'Class 8':
+                    return {
+                        textbooks: [
+                            'Mathematics - Class 8',
+                            'Science - Class 8',
+                            'English - Class 8',
+                            'Social Studies - Class 8'
+                        ],
+                        notes: [
+                            'Geometry Notes',
+                            'Chemistry Notes',
+                            'Grammar Notes',
+                            'Civics Notes'
+                        ],
+                        assignments: [
+                            'Math Quiz',
+                            'Science Experiment',
+                            'English Debate',
+                            'Social Studies Research'
+                        ]
+                    };
+                default:
+                    return {
+                        textbooks: [],
+                        notes: [],
+                        assignments: []
+                    };
+            }
+        }
+
+        // Function to render study materials
+        function renderStudyMaterials() {
+            const studentClass = getStudentClass();
+            const materials = getClassMaterials();
+            
+            // Update the class heading
+            document.getElementById('classHeading').textContent = `${studentClass} Study Materials`;
+            
+            // Render textbooks
+            const textbooksList = document.getElementById('textbooksList');
+            textbooksList.innerHTML = materials.textbooks.map(book => 
+                `<li class="list-group-item">${book}</li>`
+            ).join('');
+            
+            // Render notes
+            const notesList = document.getElementById('notesList');
+            notesList.innerHTML = materials.notes.map(note => 
+                `<li class="list-group-item">${note}</li>`
+            ).join('');
+            
+            // Render assignments
+            const assignmentsList = document.getElementById('assignmentsList');
+            assignmentsList.innerHTML = materials.assignments.map(assignment => 
+                `<li class="list-group-item">${assignment}</li>`
+            ).join('');
+        }
+
+        // Check login status when page loads
+        window.onload = function() {
+            checkLogin();
+            renderStudyMaterials();
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="School Logo">
+                Karmi Public School
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="bi bi-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="fee-payment.html"><i class="bi bi-credit-card"></i> Fee Payment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html"><i class="bi bi-images"></i> Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html"><i class="bi bi-info-circle"></i> About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="study_material.html"><i class="bi bi-book"></i> Study Materials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Add Breadcrumb -->
+    <nav aria-label="breadcrumb" class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Study Materials</li>
+        </ol>
+    </nav>
+
+    <!-- Add Notice Section before study materials section -->
+    <section class="notice-section">
+        <div class="notice-container">
+            <h2 class="notice-header">Current Notices</h2>
+            <div class="notice-item notice-important">
+                <div class="notice-date">March 15, 2024</div>
+                <h3 class="notice-title">Annual Examination Schedule</h3>
+                <p class="notice-content">The annual examinations for all classes will begin from March 25, 2024. Please check the detailed schedule in your student portal.</p>
+            </div>
+            <div class="notice-item">
+                <div class="notice-date">March 14, 2024</div>
+                <h3 class="notice-title">Sports Day Event</h3>
+                <p class="notice-content">Annual Sports Day will be held on March 20, 2024. All students are required to participate in their respective events.</p>
+            </div>
+            <div class="notice-item">
+                <div class="notice-date">March 13, 2024</div>
+                <h3 class="notice-title">Parent-Teacher Meeting</h3>
+                <p class="notice-content">The quarterly parent-teacher meeting is scheduled for March 18, 2024. Please ensure your parents attend the meeting.</p>
+            </div>
+                        </div>
+    </section>
+
+    <section class="study-section">
+        <div class="container">
+            <h2 class="text-center mb-5" id="classHeading">Study Materials</h2>
+                <div class="row">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Textbooks</h5>
+                            <ul class="list-group list-group-flush" id="textbooksList">
+                                <!-- Textbooks will be dynamically inserted here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Notes</h5>
+                            <ul class="list-group list-group-flush" id="notesList">
+                                <!-- Notes will be dynamically inserted here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Assignments</h5>
+                            <ul class="list-group list-group-flush" id="assignmentsList">
+                                <!-- Assignments will be dynamically inserted here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p><i class="bi bi-geo-alt-fill me-2"></i><a href="https://www.google.com/maps/search/?api=1&query=454G+85X+Kolbong+West+Bengal+734201" target="_blank" class="text-white text-decoration-none">454G+85X, Kolbong, West Bengal 734201</a></p>
+                    <p><i class="bi bi-telephone-fill me-2"></i>+91 7319393656</p>
+                    <p><i class="bi bi-envelope-fill me-2"></i>info@karmipublicschool.edu.np</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="admission.html">Admission</a></li>
+                        <li><a href="study_material.html">Study Materials</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <h5>Connect With Us</h5>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Karmi Public School. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0"></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

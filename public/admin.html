@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karmi Public School - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f1c40f;
+            --danger-color: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .admin-section {
+            padding: 40px 0;
+        }
+        
+        .admin-title {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .applications-table {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .table th {
+            font-weight: 500;
+            padding: 15px;
+        }
+        
+        .table td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background-color: var(--warning-color);
+            color: #000;
+        }
+        
+        .status-approved {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .status-denied {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-approve {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-deny {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-approve:hover, .btn-deny:hover {
+            opacity: 0.9;
+            color: white;
+        }
+        
+        .filters {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .stats-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .stats-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .stats-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include Header -->
+    <?php include 'includes/header.html'; ?>
+
+    <!-- Admin Dashboard Section -->
+    <section class="admin-section">
+        <div class="container">
+            <h2 class="admin-title">Admission Applications</h2>
+            
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="totalApplications">0</div>
+                        <div class="stats-label">Total Applications</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="pendingApplications">0</div>
+                        <div class="stats-label">Pending</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="approvedApplications">0</div>
+                        <div class="stats-label">Approved</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="deniedApplications">0</div>
+                        <div class="stats-label">Denied</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filters">
+                <div class="row">
+                    <div class="col-md-3">
+                        <select class="form-select" id="statusFilter">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="denied">Denied</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="classFilter">
+                            <option value="all">All Classes</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search by name or application number">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100" id="refreshBtn">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Applications Table -->
+            <div class="applications-table">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Application #</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Parent Name</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>Payment Status</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsTableBody">
+                        <!-- Applications will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include Footer -->
+    <?php include 'includes/footer.html'; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // API Base URL
+        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:8090'
+            : 'https://your-production-url.com';
+
+        // Check admin authentication
+        function checkAdminAuth() {
+            const isAdmin = localStorage.getItem('isAdmin');
+            const adminToken = localStorage.getItem('adminToken');
+            
+            if (!isAdmin || !adminToken) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        // Load applications
+        async function loadApplications() {
+            if (!checkAdminAuth()) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admission/applications`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    }
+                });
+
+                if (response.status === 401) {
+                    logout();
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch applications');
+                }
+                
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.message || 'Failed to fetch applications');
+                }
+
+                // Get payment status for each application
+                const applications = await Promise.all(result.data.map(async (app) => {
+                    try {
+                        const paymentResponse = await fetch(`${API_BASE_URL}/api/payments/applicant/${app.applicantNumber}`, {
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                            }
+                        });
+                        const paymentResult = await paymentResponse.json();
+                        
+                        return {
+                            ...app,
+                            paymentStatus: paymentResult.success && paymentResult.data.length > 0 && 
+                                         paymentResult.data[0].paymentStatus === 'Completed'
+                        };
+                    } catch (error) {
+                        console.error('Error fetching payment status:', error);
+                        return { ...app, paymentStatus: false };
+                    }
+                }));
+
+                displayApplications(applications);
+                updateStats(applications);
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message
+                });
+            }
+        }
+
+        // Display applications in table
+        function displayApplications(applications) {
+            const tbody = document.getElementById('applicationsTableBody');
+            tbody.innerHTML = '';
+
+            applications.forEach(app => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${app.applicantNumber}</td>
+                    <td>${app.studentName}</td>
+                    <td>${app.appliedClass}</td>
+                    <td>${app.parentName}</td>
+                    <td>${app.contactNumber}</td>
+                    <td>${app.email}</td>
+                    <td>
+                        <span class="status-badge ${app.paymentStatus ? 'status-approved' : 'status-denied'}">
+                            ${app.paymentStatus ? 'Paid' : 'Unpaid'}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-badge status-${app.status.toLowerCase()}">
+                            ${app.status}
+                        </span>
+                    </td>
+                    <td class="action-buttons">
+                        ${app.status === 'Pending' ? `
+                            <button class="btn btn-sm btn-approve" onclick="updateApplicationStatus('${app.applicantNumber}', 'approved')">
+                                <i class="bi bi-check-lg"></i> Approve
+                            </button>
+                            <button class="btn btn-sm btn-deny" onclick="updateApplicationStatus('${app.applicantNumber}', 'denied')">
+                                <i class="bi bi-x-lg"></i> Deny
+                            </button>
+                        ` : ''}
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Update application status
+        async function updateApplicationStatus(applicantNumber, status) {
+            if (!checkAdminAuth()) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admission/applications/${applicantNumber}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: status.toUpperCase() })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update application status');
+                }
+
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.message || 'Failed to update application status');
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: `Application ${status === 'approved' ? 'approved' : 'denied'} successfully`
+                });
+
+                loadApplications();
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message
+                });
+            }
+        }
+
+        // Update stats
+        function updateStats(applications) {
+            document.getElementById('totalApplications').textContent = applications.length;
+            document.getElementById('pendingApplications').textContent = 
+                applications.filter(app => app.status === 'Pending').length;
+            document.getElementById('approvedApplications').textContent = 
+                applications.filter(app => app.status === 'Approved').length;
+            document.getElementById('deniedApplications').textContent = 
+                applications.filter(app => app.status === 'Denied').length;
+        }
+
+        // Filter applications
+        function filterApplications() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const classFilter = document.getElementById('classFilter').value;
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+
+            const rows = document.getElementById('applicationsTableBody').getElementsByTagName('tr');
+
+            for (let row of rows) {
+                const status = row.querySelector('.status-badge').textContent.toLowerCase();
+                const className = row.cells[2].textContent;
+                const studentName = row.cells[1].textContent.toLowerCase();
+                const applicantNumber = row.cells[0].textContent.toLowerCase();
+
+                const statusMatch = statusFilter === 'all' || status === statusFilter;
+                const classMatch = classFilter === 'all' || className === classFilter;
+                const searchMatch = !searchInput || 
+                    studentName.includes(searchInput) || 
+                    applicantNumber.includes(searchInput);
+
+                row.style.display = statusMatch && classMatch && searchMatch ? '' : 'none';
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            if (checkAdminAuth()) {
+                loadApplications();
+            }
+
+            document.getElementById('statusFilter').addEventListener('change', filterApplications);
+            document.getElementById('classFilter').addEventListener('change', filterApplications);
+            document.getElementById('searchInput').addEventListener('input', filterApplications);
+            document.getElementById('refreshBtn').addEventListener('click', loadApplications);
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isAdmin');
+            localStorage.removeItem('adminToken');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html> 

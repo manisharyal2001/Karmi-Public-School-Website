@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission - Karmi Public School</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --navy-blue: #003366;
+            --navy-blue-light: #004080;
+            --navy-blue-dark: #002147;
+            --transition-speed: 0.3s;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: var(--navy-blue);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .nav-link {
+            color: white !important;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #f8f9fa !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            color: #f8f9fa !important;
+            font-weight: 600;
+        }
+
+        .page-title {
+            color: var(--navy-blue);
+            text-align: center;
+            margin: 3rem 0;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .page-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--navy-blue);
+            margin: 10px auto;
+        }
+
+        footer {
+            background-color: var(--navy-blue);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f8f9fa;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            font-size: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Global Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Animations */
+        .form-control, .form-select {
+            transition: all var(--transition-speed) ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-section {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+            animation-delay: calc(var(--section-index) * 0.1s);
+        }
+
+        .btn-primary {
+            transition: all var(--transition-speed) ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Breadcrumb Styles */
+        .breadcrumb {
+            background: transparent;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb-item {
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--navy-blue);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--navy-blue-light);
+        }
+
+        .breadcrumb-item.active {
+            color: #6c757d;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .form-label {
+                font-size: 0.9rem;
+            }
+
+            .btn-primary {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .footer {
+                text-align: center;
+                padding: 2rem 0;
+            }
+
+            .footer .text-md-end {
+                text-align: center !important;
+                margin-top: 1rem;
+            }
+
+            .social-links {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+        }
+
+        /* Error message styles */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .is-invalid {
+            border-color: #dc3545;
+        }
+
+        .is-invalid:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="School Logo">
+                Karmi Public School
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="admission.html">Admission</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Add Breadcrumb -->
+    <nav aria-label="breadcrumb" class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Admission</li>
+        </ol>
+    </nav>
+
+    <div class="container fade-in">
+        <div class="form-container">
+            <form id="admissionForm">
+                <!-- Student Information -->
+                <div class="form-section" style="--section-index: 1;">
+                    <h4 class="section-title">Student Information</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="studentName" class="form-label required-field">Student's Full Name</label>
+                            <input type="text" class="form-control" id="studentName" name="studentName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="dateOfBirth" class="form-label required-field">Date of Birth</label>
+                            <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="gender" class="form-label required-field">Gender</label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="appliedClass" class="form-label required-field">Class Applying For</label>
+                            <select class="form-select" id="appliedClass" name="appliedClass" required>
+                                <option value="">Select Class</option>
+                                <option value="Nursery">Nursery</option>
+                                <option value="LKG">LKG</option>
+                                <option value="UKG">UKG</option>
+                                <option value="Class 1">Class 1</option>
+                                <option value="Class 2">Class 2</option>
+                                <option value="Class 3">Class 3</option>
+                                <option value="Class 4">Class 4</option>
+                                <option value="Class 5">Class 5</option>
+                                <option value="Class 6">Class 6</option>
+                                <option value="Class 7">Class 7</option>
+                                <option value="Class 8">Class 8</option>
+                                <option value="Class 9">Class 9</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="marksheetSection" style="display: none;" class="row mb-3">
+                        <div class="col-12">
+                            <label for="marksheet" class="form-label required-field">Previous Class Marksheet</label>
+                            <input type="file" class="form-control" id="marksheet" name="marksheet" accept=".pdf,.jpg,.jpeg,.png">
+                            <small class="text-muted">Upload previous class marksheet (PDF, JPG, JPEG, or PNG format only)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parent Information -->
+                <div class="form-section" style="--section-index: 2;">
+                    <h4 class="section-title">Parent/Guardian Information</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="parentName" class="form-label required-field">Parent/Guardian Name</label>
+                            <input type="text" class="form-control" id="parentName" name="parentName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label required-field">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="contactNumber" class="form-label required-field">Phone Number</label>
+                            <input type="tel" class="form-control" id="contactNumber" name="contactNumber" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="address" class="form-label required-field">Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                </div>
+            </form>
+
+            <!-- Success Modal -->
+            <div class="modal fade" id="successModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Application Submitted Successfully</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Your application has been submitted successfully.</p>
+                            <p>Your Application Number: <strong id="applicantNumber"></strong></p>
+                            <p>Please save this number for future reference.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p><i class="bi bi-geo-alt-fill me-2"></i><a href="https://www.google.com/maps/search/?api=1&query=454G+85X+Kolbong+West+Bengal+734201" target="_blank" class="text-white text-decoration-none">454G+85X, Kolbong, West Bengal 734201</a></p>
+                    <p><i class="bi bi-telephone-fill me-2"></i>+977 1-4XXXXXX</p>
+                    <p><i class="bi bi-envelope-fill me-2"></i>info@karmipublicschool.edu.np</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="admission.html">Admission</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <h5>Connect With Us</h5>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Karmi Public School. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Designed with <i class="bi bi-heart-fill text-danger"></i> for education</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // API Base URL
+        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:8090'
+            : 'https://your-production-url.com';
+
+        // jQuery Document Ready
+        $(document).ready(function() {
+            // Toggle marksheet upload field based on class selection
+            $('#appliedClass').on('change', function() {
+                const selectedClass = $(this).val();
+                const marksheetSection = $('#marksheetSection');
+                const marksheetInput = $('#marksheet');
+                
+                if (selectedClass && selectedClass !== 'Nursery') {
+                    marksheetSection.slideDown(300);
+                    marksheetInput.prop('required', true);
+                } else {
+                    marksheetSection.slideUp(300);
+                    marksheetInput.prop('required', false);
+                }
+            });
+
+            // Handle form submission
+            $('#admissionForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const $submitButton = $(this).find('button[type="submit"]');
+                const originalText = $submitButton.html();
+                
+                // Show loading state
+                $submitButton.prop('disabled', true)
+                    .html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...');
+
+                // Submit form data
+                $.ajax({
+                    url: `${API_BASE_URL}/api/admission`,
+                    method: 'POST',
+                    data: JSON.stringify({
+                        studentName: $('#studentName').val().trim(),
+                        dateOfBirth: $('#dateOfBirth').val(),
+                        gender: $('#gender').val(),
+                        appliedClass: $('#appliedClass').val(),
+                        parentName: $('#parentName').val().trim(),
+                        email: $('#email').val().trim(),
+                        contactNumber: $('#contactNumber').val().trim(),
+                        address: $('#address').val().trim(),
+                        status: 'Pending'
+                    }),
+                    processData: false,
+                    contentType: 'application/json',
+                    success: function(result) {
+                        // Store application details in localStorage
+                        const applicationData = {
+                            number: result.data.applicantNumber,
+                            name: $('#studentName').val().trim(),
+                            class: $('#appliedClass').val(),
+                            fee: 1000,
+                            feeCategory: 'Admission Fee',
+                            parentName: $('#parentName').val().trim(),
+                            email: $('#email').val().trim(),
+                            contactNumber: $('#contactNumber').val().trim()
+                        };
+                        
+                        localStorage.setItem('currentApplication', JSON.stringify(applicationData));
+                        
+                        // Show success message with redirection to fee payment
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Application Submitted Successfully!',
+                            html: `Your application number is: <strong>${result.data.applicantNumber}</strong><br><br>Please proceed to pay the admission fee of ₹1000.`,
+                            confirmButtonText: 'Proceed to Payment',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then((swalResult) => {
+                            if (swalResult.isConfirmed) {
+                                window.location.href = 'fee_payment.html';
+                            }
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        console.error('Response:', xhr.responseJSON);
+                        
+                        let errorMessage = 'Failed to submit application. ';
+                        
+                        if (xhr.responseJSON) {
+                            if (xhr.responseJSON.errors) {
+                                errorMessage += '\n\nValidation Errors:';
+                                Object.entries(xhr.responseJSON.errors).forEach(([field, msg]) => {
+                                    errorMessage += `\n${field}: ${msg}`;
+                                    // Highlight the invalid field
+                                    $(`#${field}`).addClass('is-invalid');
+                                });
+                            } else if (xhr.responseJSON.message) {
+                                errorMessage += xhr.responseJSON.message;
+                            }
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: errorMessage,
+                            confirmButtonText: 'Try Again'
+                        });
+                    },
+                    complete: function() {
+                        // Reset button state
+                        $submitButton.prop('disabled', false).html(originalText);
+                    }
+                });
+            });
+
+            // Add file input validation
+            $('#marksheet').on('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const fileType = file.type;
+                    const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+                    
+                    if (!validTypes.includes(fileType)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Invalid File Type',
+                            text: 'Please upload a PDF, JPG, JPEG, or PNG file only.',
+                            confirmButtonText: 'OK'
+                        });
+                        this.value = '';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
